@@ -72,7 +72,7 @@ namespace ORB_SLAM2 {
 
         bool Save(const string &filename);
 
-        bool Load(const string &filename, ORBVocabulary &voc);
+        bool Load(const string &filename, ORBVocabulary* pVoc);
 
         // This is to load the camera parameter and later used for retrieving the map
         bool LoadCofficient(const string &strSettingPath);
@@ -102,7 +102,7 @@ namespace ORB_SLAM2 {
 
         MapPoint *ReadMapPoint(ifstream &f);
 
-        KeyFrame *ReadKeyFrame(ifstream &f, ORBVocabulary &voc, std::vector<MapPoint *> amp, ORBextractor *ex);
+        KeyFrame *ReadKeyFrame(ifstream &f, ORBVocabulary* pVoc, std::vector<MapPoint *> amp, ORBextractor *ex);
 
         KeyFrameDatabase* mpKeyFrameDB;
         // Calibration matrix and OpenCV distortion parameters.

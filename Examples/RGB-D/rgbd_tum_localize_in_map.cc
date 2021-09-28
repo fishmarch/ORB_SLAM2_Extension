@@ -63,6 +63,8 @@ int main(int argc, char **argv) {
         return 1;
     }
 
+    SLAM.LocalizeRGBD(imRGB, imD);
+
     cv::waitKey();
 
     // Stop all threads

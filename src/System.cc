@@ -479,8 +479,7 @@ namespace ORB_SLAM2 {
             cout << " Filed! " << endl;
             return false;
         }
-        cerr << "Loading map from " << mapfile << endl;
-        return mpMap->Load(mapfile, *mpVocabulary);
+        return mpMap->Load(mapfile, mpVocabulary);
     }
 
 } //namespace ORB_SLAM

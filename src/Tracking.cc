@@ -266,6 +266,7 @@ namespace ORB_SLAM2 {
             imDepth.convertTo(imDepth,CV_32F,mDepthMapFactor);
 
         mCurrentFrame = Frame(mImGray,imDepth,0.0,mpORBextractorLeft,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+        mCurrentFrame.mnId = 999999;
 
         bool bOK = Relocalization();
         if(!bOK){
@@ -1230,8 +1231,10 @@ namespace ORB_SLAM2 {
         // Track Lost: Query KeyFrame Database for keyframe candidates for relocalisation
         vector<KeyFrame *> vpCandidateKFs = mpKeyFrameDB->DetectRelocalizationCandidates(&mCurrentFrame);
 
-        if (vpCandidateKFs.empty())
+        if (vpCandidateKFs.empty()) {
+            cerr << "vpCandidateKFs is empty" << endl;
             return false;
+        }
 
         const int nKFs = vpCandidateKFs.size();
 

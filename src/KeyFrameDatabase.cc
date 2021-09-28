@@ -221,8 +221,11 @@ vector<KeyFrame*> KeyFrameDatabase::DetectRelocalizationCandidates(Frame *F)
             }
         }
     }
-    if(lKFsSharingWords.empty())
-        return vector<KeyFrame*>();
+    cout << "lKFsSharingWords size: " << lKFsSharingWords.size() << endl;
+    if(lKFsSharingWords.empty()) {
+        cerr << "lKFsSharingWords is empty" << endl;
+        return vector<KeyFrame *>();
+    }
 
     // Only compare against those keyframes that share enough words
     int maxCommonWords=0;
@@ -233,6 +236,7 @@ vector<KeyFrame*> KeyFrameDatabase::DetectRelocalizationCandidates(Frame *F)
     }
 
     int minCommonWords = maxCommonWords*0.8f;
+    cout << "Max common words: " << maxCommonWords << " Min common words: " << minCommonWords << endl;
 
     list<pair<float,KeyFrame*> > lScoreAndMatch;
 
@@ -242,19 +246,20 @@ vector<KeyFrame*> KeyFrameDatabase::DetectRelocalizationCandidates(Frame *F)
     for(list<KeyFrame*>::iterator lit=lKFsSharingWords.begin(), lend= lKFsSharingWords.end(); lit!=lend; lit++)
     {
         KeyFrame* pKFi = *lit;
+        float si = mpVoc->score(F->mBowVec,pKFi->mBowVec);
+        pKFi->mRelocScore=si;
 
         if(pKFi->mnRelocWords>minCommonWords)
         {
             nscores++;
-            float si = mpVoc->score(F->mBowVec,pKFi->mBowVec);
-            pKFi->mRelocScore=si;
             lScoreAndMatch.push_back(make_pair(si,pKFi));
         }
     }
 
-    if(lScoreAndMatch.empty())
-        return vector<KeyFrame*>();
-
+    if(lScoreAndMatch.empty()) {
+        cerr << "lScoreAndMatch is empty" << endl;
+        return vector<KeyFrame *>();
+    }
     list<pair<float,KeyFrame*> > lAccScoreAndMatch;
     float bestAccScore = 0;
 
@@ -279,7 +284,6 @@ vector<KeyFrame*> KeyFrameDatabase::DetectRelocalizationCandidates(Frame *F)
                 pBestKF=pKF2;
                 bestScore = pKF2->mRelocScore;
             }
-
         }
         lAccScoreAndMatch.push_back(make_pair(accScore,pBestKF));
         if(accScore>bestAccScore)

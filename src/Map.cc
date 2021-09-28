@@ -205,7 +205,7 @@ namespace ORB_SLAM2 {
         }
     }
 
-    bool Map::Load(const string &filename, ORBVocabulary &voc) {
+    bool Map::Load(const string &filename, ORBVocabulary* pVoc) {
 
         ORB_SLAM2::ORBextractor orb_ext = ORB_SLAM2::ORBextractor(nFeatures, fScaleFactor, nLevels, fIniThFAST,
                                                                   fMinThFAST);
@@ -232,7 +232,8 @@ namespace ORB_SLAM2 {
         vector<KeyFrame *> kf_by_order;
         for (unsigned int i = 0; i < nb_keyframes; i++) {
             //std::cout << "pass:" << i << std::endl;
-            KeyFrame *kf = ReadKeyFrame(f, voc, amp, &orb_ext);
+            KeyFrame *kf = ReadKeyFrame(f, pVoc, amp, &orb_ext);
+//            kf->ComputeBoW();
             AddKeyFrame(kf);
             mpKeyFrameDB->add(kf);
             kf_by_order.push_back(kf);
@@ -279,9 +280,9 @@ namespace ORB_SLAM2 {
         return mp;
     }
 
-    KeyFrame *Map::ReadKeyFrame(ifstream &f, ORBVocabulary &voc, std::vector<MapPoint *> amp, ORBextractor *orb_ext) {
+    KeyFrame *Map::ReadKeyFrame(ifstream &f, ORBVocabulary* pVoc, std::vector<MapPoint *> amp, ORBextractor *orb_ext) {
         Frame fr;
-        fr.mpORBvocabulary = &voc;
+        fr.mpORBvocabulary = pVoc;
         f.read((char *) &fr.mnId, sizeof(fr.mnId));              // ID
         //cerr << " reading keyfrane id " << fr.mnId << endl;
         f.read((char *) &fr.mTimeStamp, sizeof(fr.mTimeStamp));  // timestamp

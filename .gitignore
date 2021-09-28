@@ -3,6 +3,9 @@ Examples/Monocular/mono_euroc
 Examples/Monocular/mono_kitti
 Examples/Monocular/mono_tum
 Examples/RGB-D/rgbd_tum
+Examples/RGB-D/rgbd_tum_loadmap
+Examples/RGB-D/rgbd_tum_savemap
+Examples/RGB-D/rgbd_tum_localize_in_map
 Examples/ROS/ORB_SLAM2/CMakeLists.txt.user
 Examples/ROS/ORB_SLAM2/Mono
 Examples/ROS/ORB_SLAM2/MonoAR
@@ -23,4 +26,3 @@ build/
 lib/
 .idea
 *build*
-
