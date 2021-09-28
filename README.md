@@ -13,5 +13,6 @@ An example is shown in the image. The map is built in Sequence living_room_0 of 
 
 ### Reference
 [ORB-SLAM2](https://github.com/raulmur/ORB_SLAM2)
+
 [Active-ORB-SLAM2](https://github.com/XinkeAE/Active-ORB-SLAM2)
 
